@@ -1,0 +1,137 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Um push novo cancela a execução anterior do mesmo branch.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  api:
+    name: API (testes com PostgreSQL real)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: api
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+          cache-dependency-path: api/pom.xml
+      # Os testes sobem o PostgreSQL com Testcontainers; o Docker já vem instalado no runner.
+      - run: mvn -B verify
+
+  android:
+    name: App Android (testes e build)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: android
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v6
+      # O runner já tem o Android SDK com as licenças aceitas; o Gradle baixa a plataforma que faltar.
+      - run: ./gradlew --no-configuration-cache :app:testDebugUnitTest :app:assembleDebug
+      # Quantos testes rodaram em cada classe (telas, acessibilidade, contraste...), no resumo da execução.
+      - name: Resumo dos testes do app
+        if: always()
+        run: |
+          python3 - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import glob, xml.etree.ElementTree as ET
+          print("### Testes do app\n\n| Classe | Testes | Falhas |\n| --- | --- | --- |")
+          total = falhas = 0
+          for f in sorted(glob.glob("app/build/test-results/testDebugUnitTest/*.xml")):
+              r = ET.parse(f).getroot()
+              t, e = int(r.get("tests")), int(r.get("failures")) + int(r.get("errors"))
+              total += t; falhas += e
+              print(f"| {r.get('name').split('.')[-1]} | {t} | {e} |")
+          print(f"| **Total** | **{total}** | **{falhas}** |")
+          PY
+      - uses: actions/upload-artifact@v7
+        with:
+          name: valtrea-volta-debug-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 14
+
+  web:
+    name: Site (build de produção)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npm run build
+        env:
+          VITE_API_URL: https://volta-api.valtrea.com.br
+
+  dependencias:
+    name: Dependências da API sem falhas críticas
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      # OSV-Scanner (Google) confere o pom.xml e todas as bibliotecas que ele puxa na base pública de falhas.
+      # Reprova só falha CRÍTICA; as outras aparecem no resumo para corrigir com o Dependabot.
+      - name: Auditoria com OSV-Scanner
+        run: |
+          curl -sSL -o osv-scanner https://github.com/google/osv-scanner/releases/download/v2.7.0/osv-scanner_linux_amd64
+          chmod +x osv-scanner
+          ./osv-scanner scan source -L api/pom.xml --format json --output osv.json || true
+          python3 - <<'PY'
+          import json, os
+          dados = json.load(open('osv.json')) if os.path.getsize('osv.json') else {}
+          linhas, criticas = [], 0
+          for r in dados.get('results', []):
+              for p in r.get('packages', []):
+                  pkg = p['package']
+                  for g in p.get('groups', []):
+                      sev = g.get('max_severity') or ''
+                      try:
+                          nota = float(sev)
+                      except ValueError:
+                          nota = 0.0
+                      if nota >= 9.0:
+                          criticas += 1
+                      corrigida = sorted({ev['fixed'] for v in p.get('vulnerabilities', []) if v['id'] in g.get('ids', [])
+                                          for a in v.get('affected', []) if a.get('package', {}).get('name') == pkg['name']
+                                          for r in a.get('ranges', []) for ev in r.get('events', []) if 'fixed' in ev})
+                      linhas.append(f"| {pkg['name']} {pkg.get('version', '')} | {', '.join(g.get('ids', []))} | {sev or '—'} | {', '.join(corrigida) or '—'} |")
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as s:
+              s.write('### Falhas conhecidas nas bibliotecas da API\n\n')
+              s.write('| Biblioteca | Falha | Nota (CVSS) | Corrigida em |\n| --- | --- | --- | --- |\n' + '\n'.join(linhas) + '\n' if linhas else 'Nenhuma falha conhecida.\n')
+          print('\n'.join(linhas))
+          print(f'{len(linhas)} falha(s) conhecida(s), {criticas} crítica(s)')
+          if criticas:
+              raise SystemExit('Há falha CRÍTICA numa biblioteca da API. Atualize a dependência.')
+          PY
+
+  segredos:
+    name: Nenhuma senha ou chave no código
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # todo o histórico: um segredo apagado depois continua no histórico
+      # gitleaks procura senhas, chaves de API, tokens e strings de conexão em todos os commits
+      - name: Varredura com gitleaks
+        run: |
+          curl -sSL https://github.com/gitleaks/gitleaks/releases/download/v8.18.4/gitleaks_8.18.4_linux_x64.tar.gz | tar xz gitleaks
+          ./gitleaks detect --source . --redact --verbose --no-banner --exit-code 1

@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /v/
+Disallow: /objetos
+Disallow: /avisos
+Disallow: /conta

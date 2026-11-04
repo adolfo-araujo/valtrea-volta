@@ -1,0 +1,20 @@
+package br.com.valtrea.volta.ui.componentes
+
+import android.content.Context
+import android.content.Intent
+import androidx.core.net.toUri
+import br.com.valtrea.volta.BuildConfig
+
+/** Páginas públicas do site (exigidas pelo Google Play). */
+object Links {
+    /** Versão vigente dos Termos e da Política. Igual a Termos.VERSAO na API. */
+    const val VERSAO_TERMOS = "2026-11-04"
+
+    val privacidade = BuildConfig.SITE_URL + "privacidade"
+    val termos = BuildConfig.SITE_URL + "termos"
+    val acessibilidade = BuildConfig.SITE_URL + "acessibilidade"
+
+    fun abrir(context: Context, url: String) {
+        context.startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
+    }
+}

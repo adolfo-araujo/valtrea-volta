@@ -1,0 +1,20 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./index.html', './src/**/*.{js,jsx}'],
+  theme: {
+    extend: {
+      fontFamily: { sans: ['Mulish', 'system-ui', 'sans-serif'] },
+      colors: {
+        background: '#0D0F12',
+        surface: '#15181D',
+        'surface-2': '#1C2026',
+        border: '#272C34',
+        foreground: '#ECEEF1',
+        muted: '#9AA0AA',
+        primary: { DEFAULT: '#55B02E', hover: '#4A9A28' },
+        danger: '#F87171',
+      },
+    },
+  },
+  plugins: [],
+}

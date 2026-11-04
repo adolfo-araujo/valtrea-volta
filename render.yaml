@@ -1,0 +1,45 @@
+# Publicação da API do Valtrea Volta no Render (https://render.com) a partir deste repositório.
+# No painel do Render: New → Blueprint → escolha o repositório valtrea-volta.
+# Os valores marcados com "sync: false" são pedidos na tela; nunca ficam no Git.
+services:
+  - type: web
+    name: valtrea-volta-api
+    runtime: docker
+    rootDir: api
+    dockerfilePath: ./Dockerfile
+    plan: free
+    # Mesma região do banco no Neon (AWS US East): cada ida ao banco fica em ~2 ms em vez de ~120 ms.
+    region: virginia
+    healthCheckPath: /actuator/health
+    autoDeploy: true
+    envVars:
+      # Banco no Neon (região AWS US East 1), no formato jdbc:postgresql://<host>/<banco>?sslmode=require
+      - key: DATABASE_URL
+        sync: false
+      - key: DATABASE_USER
+        sync: false
+      - key: DATABASE_PASSWORD
+        sync: false
+      # Assina os tokens de acesso. O Render gera um valor aleatório.
+      - key: VALTREA_JWT_SECRET
+        generateValue: true
+      # Cifra o código de cada etiqueta (256 bits em Base64). Não troque depois: os QR Codes antigos continuam
+      # funcionando, mas o dono deixa de conseguir baixá-los de novo.
+      - key: VALTREA_CHAVE_CIFRA
+        generateValue: true
+      # Endereço do site: vai dentro de cada QR Code ({url}/v/{código}). Não mude depois de imprimir etiquetas.
+      - key: VALTREA_URL_SITE
+        value: https://volta.valtrea.com.br
+      # Sites que podem chamar a API pelo navegador.
+      - key: VALTREA_CORS
+        value: https://volta.valtrea.com.br
+      # E-mails pela API HTTP do Resend (o mesmo do Finance e do Pay): o plano gratuito do Render bloqueia SMTP.
+      - key: RESEND_API_KEY
+        sync: false
+      - key: MAIL_FROM
+        value: "Valtrea Volta <nao-responda@valtrea.com.br>"
+      # Opcionais
+      - key: SENTRY_DSN
+        sync: false
+      - key: VALTREA_ADMIN_EMAILS
+        sync: false

@@ -1,0 +1,5 @@
+package br.com.valtrea.volta.objeto;
+
+public enum Categoria {
+	MOCHILA_BOLSA, CARTEIRA_DOCUMENTOS, CHAVES, ELETRONICO, OCULOS, ROUPA, BRINQUEDO, BICICLETA, MALA, PET, OUTRO
+}
