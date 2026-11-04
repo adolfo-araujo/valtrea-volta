@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { chamar } from '../lib/api'
 import { useAuth } from '../lib/auth'
@@ -52,8 +52,10 @@ export function CadastroPage() {
   const [dados, setDados] = useState({ nome: '', email: '', senha: '' })
   const [aceite, setAceite] = useState(false)
   const [erros, setErros] = useState({})
+  const acabouDeCriar = useRef(false)
   const { enviando, erro, executar } = useEnvio()
-  if (perfil) return <Navigate to="/objetos" replace />
+  // Quem acabou de criar a conta vai para a confirmação do e-mail, não para a lista de objetos
+  if (perfil) return <Navigate to={acabouDeCriar.current ? '/confirmar-email' : '/objetos'} replace />
 
   const muda = (campo) => (e) => setDados({ ...dados, [campo]: e.target.value })
 
@@ -68,8 +70,8 @@ export function CadastroPage() {
     if (Object.keys(novos).length) return
     executar(async () => {
       const tokens = await chamar('POST', '/auth/cadastro', dados, { autenticar: false })
+      acabouDeCriar.current = true
       await entrar(tokens)
-      navegar('/confirmar-email')
     })
   }
 
