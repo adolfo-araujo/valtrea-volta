@@ -86,7 +86,7 @@ test('fluxo completo: cadastrar, gerar etiqueta, quem encontra avisa e o dono l�
   await expect(achador.getByText('Dona Teste')).toHaveCount(0)
   await expect(achador.getByText('chaveiro de gato')).toHaveCount(0)
   await semProblemasDeAcessibilidade(achador, 'página de quem encontrou')
-  await achador.getByLabel('Mensagem').fill('Achei no ônibus 485, posso entregar amanhã.')
+  await achador.getByRole('textbox', { name: 'Mensagem', exact: true }).fill('Achei no ônibus 485, posso entregar amanhã.')
   await achador.getByLabel('Seu contato (opcional)').fill('achador@test.dev')
   await achador.getByLabel(/Concordo em enviar/).check()
   await achador.getByRole('button', { name: 'Enviar aviso' }).click()
