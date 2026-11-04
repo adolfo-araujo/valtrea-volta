@@ -83,6 +83,77 @@ jobs:
         env:
           VITE_API_URL: https://volta-api.valtrea.com.br
 
+  e2e:
+    name: QA no navegador (computador e celular)
+    # Playwright ainda não roda no Ubuntu 26.04
+    runs-on: ubuntu-24.04
+    services:
+      postgres:
+        image: postgres:18-alpine
+        env:
+          POSTGRES_USER: valtrea
+          POSTGRES_PASSWORD: valtrea
+          POSTGRES_DB: valtrea_volta
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready --health-interval 5s
+          --health-timeout 5s --health-retries 10
+    env:
+      DATABASE_URL_PSQL: postgresql://valtrea:valtrea@localhost:5432/valtrea_volta
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+          cache-dependency-path: api/pom.xml
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Subir a API
+        working-directory: api
+        env:
+          VALTREA_JWT_SECRET: segredo-do-ci-com-pelo-menos-32-caracteres
+          VALTREA_CHAVE_CIFRA: MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY=
+          VALTREA_URL_SITE: http://localhost:5175
+          VALTREA_CORS: http://localhost:5175
+          VALTREA_LIMITE_GERAL: '100000'
+          VALTREA_LIMITE_AUTENTICACAO: '100000'
+          VALTREA_LIMITE_CADASTRO: '100000'
+          VALTREA_LIMITE_AVISOS: '100000'
+        run: |
+          mvn -q -B -DskipTests package
+          nohup java -jar target/valtrea-volta-api-*.jar > ../api.log 2>&1 &
+          for i in $(seq 1 90); do curl -sf http://localhost:8080/actuator/health && break; sleep 2; done
+      # Build de produção servido com os mesmos cabeçalhos da Vercel (inclusive a CSP); /api vai para a API local
+      - name: Subir o site (build de produção)
+        working-directory: web
+        env:
+          VITE_API_URL: http://localhost:5175
+        run: |
+          npm install
+          npm run build
+          nohup node ../e2e/servidor-producao.mjs dist vercel.json 5175 http://localhost:8080 > ../web.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf http://localhost:5175/ >/dev/null && break; sleep 1; done
+      - name: Rodar os testes no navegador
+        working-directory: e2e
+        run: |
+          npm install
+          npx playwright install --with-deps chromium
+          npx playwright test
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: relatorio-qa-navegador
+          path: |
+            e2e/playwright-report/
+            e2e/test-results/
+            api.log
+            web.log
+          retention-days: 7
+
   dependencias:
     name: Dependências da API sem falhas críticas
     runs-on: ubuntu-latest

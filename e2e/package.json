@@ -1,0 +1,9 @@
+{
+  "name": "valtrea-volta-e2e",
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "@axe-core/playwright": "4.10.1",
+    "@playwright/test": "1.52.0"
+  }
+}
