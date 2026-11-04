@@ -55,8 +55,8 @@ Todas em `/api/v1`. Documentação interativa em `/swagger-ui.html`.
 docker run -d --name volta-db -p 5432:5432 -e POSTGRES_USER=valtrea -e POSTGRES_PASSWORD=valtrea -e POSTGRES_DB=valtrea_volta postgres:18-alpine
 # API (porta 8080)
 cd api
-VALTREA_JWT_SECRET=segredo-de-desenvolvimento-com-32-caracteres \
-VALTREA_CHAVE_CIFRA=MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY= \
+VALTREA_JWT_SECRET=$(openssl rand -hex 32) \
+VALTREA_CHAVE_CIFRA=$(openssl rand -base64 32) \
 VALTREA_URL_SITE=http://localhost:5175 VALTREA_CORS=http://localhost:5175 mvn spring-boot:run
 # Site (porta 5175)
 cd ../web && npm install && npm run dev
