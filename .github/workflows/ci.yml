@@ -81,7 +81,7 @@ jobs:
       - run: npm install
       - run: npm run build
         env:
-          VITE_API_URL: https://volta-api.valtrea.com.br
+          VITE_API_URL: https://valtrea-volta-api.onrender.com
 
   e2e:
     name: QA no navegador (computador e celular)

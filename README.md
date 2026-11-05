@@ -4,7 +4,7 @@ Etiquetas com QR Code para objetos. Quem encontra um objeto lê o código com a 
 
 | Parte | Pasta | Tecnologia | Onde roda |
 | --- | --- | --- | --- |
-| API | `api/` | Java 21, Spring Boot 4.1, PostgreSQL, Flyway | Render (`volta-api.valtrea.com.br`) |
+| API | `api/` | Java 21, Spring Boot 4.1, PostgreSQL, Flyway | Render (`valtrea-volta-api.onrender.com`) |
 | Site | `web/` | React, Vite, Tailwind | Vercel (`volta.valtrea.com.br`) |
 | App | `android/` | Kotlin, Jetpack Compose | Google Play |
 
@@ -67,9 +67,9 @@ Sem SMTP configurado, os e-mails (códigos) aparecem no log da API. O app Androi
 ## Publicar
 
 1. **Banco (Neon):** crie o projeto `valtrea-volta` na região **AWS US East 1 (N. Virginia)**, a mesma do Render. O teste de capacidade do Pay mostrou que o banco em São Paulo com a API nos EUA deixa cada ida ao banco com ~120 ms.
-2. **API (Render):** New → Blueprint → repositório `valtrea-volta`. Preencha `DATABASE_URL` (`jdbc:postgresql://<host>/<banco>?sslmode=require`), `DATABASE_USER`, `DATABASE_PASSWORD` e `RESEND_API_KEY`. Depois, em Settings → Custom Domains, adicione `volta-api.valtrea.com.br`.
-3. **Site (Vercel):** Add New → Project → repositório `valtrea-volta`, **Root Directory** `web`, framework Vite. Em Environment Variables, `VITE_API_URL` = `https://volta-api.valtrea.com.br`. Em Domains, adicione `volta.valtrea.com.br`.
-4. **DNS:** crie os registros que o Render e a Vercel mostrarem para `volta-api` e `volta`.
-5. **App:** a variante `release` já aponta para `https://volta-api.valtrea.com.br/`.
+2. **API (Render):** New → Blueprint → repositório `valtrea-volta`. Preencha `DATABASE_URL` (`jdbc:postgresql://<host>/<banco>?sslmode=require`), `DATABASE_USER`, `DATABASE_PASSWORD` e `RESEND_API_KEY`.
+3. **Site (Vercel):** Add New → Project → repositório `valtrea-volta`, **Root Directory** `web`, framework Vite. Em Environment Variables, `VITE_API_URL` = `https://valtrea-volta-api.onrender.com`. Em Domains, adicione `volta.valtrea.com.br`.
+4. **DNS:** crie o registro que a Vercel mostrar para `volta`.
+5. **App:** a variante `release` já aponta para `https://valtrea-volta-api.onrender.com/`.
 
 O endereço do site vai dentro de cada QR Code: não mude `VALTREA_URL_SITE` depois de imprimir etiquetas.

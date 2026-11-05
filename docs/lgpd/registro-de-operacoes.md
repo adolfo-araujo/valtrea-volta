@@ -5,7 +5,7 @@ Documento interno (LGPD art. 37), no formato simplificado para agente de tratame
 - **Controlador:** João Adolfo Martins Araújo (pessoa física), Rio de Janeiro/RJ
 - **Encarregado / canal:** sem encarregado indicado (dispensa de pequeno porte); canal: contato@valtrea.com.br
 - **Elaborado em:** 04/11/2026 · **Revisar:** a cada 12 meses ou a cada nova funcionalidade que trate dados
-- **Serviço:** Valtrea Volta (site volta.valtrea.com.br, app Android e API volta-api.valtrea.com.br), em testes
+- **Serviço:** Valtrea Volta (site volta.valtrea.com.br, app Android e API valtrea-volta-api.onrender.com), em testes
 
 ## Operações
 

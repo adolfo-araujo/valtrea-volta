@@ -53,7 +53,7 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            buildConfigField("String", "API_URL", "\"https://volta-api.valtrea.com.br/\"")
+            buildConfigField("String", "API_URL", "\"https://valtrea-volta-api.onrender.com/\"")
             buildConfigField("String", "SITE_URL", "\"https://volta.valtrea.com.br/\"")
             signingConfig = signingConfigs.findByName("upload")
         }
