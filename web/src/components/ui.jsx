@@ -181,3 +181,39 @@ export function Pagina({ titulo, children, largura = 'max-w-5xl' }) {
     </div>
   )
 }
+
+/**
+ * Tela das páginas de conta (entrar, criar conta, senha): centralizada, com o logo em cima, o formulário num cartão,
+ * os links logo abaixo e o rodapé enxuto. Mesmo visual do Valtrea Finance.
+ */
+export function TelaAuth({ titulo, subtitulo, children, abaixo }) {
+  return (
+    <div className="flex min-h-screen flex-col">
+      <a
+        href="#conteudo"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:font-semibold focus:text-background"
+      >
+        Pular para o conteúdo
+      </a>
+      <main id="conteudo" tabIndex={-1} className="flex flex-1 flex-col items-center justify-center px-4 py-10">
+        <Link to="/" aria-label="Valtrea Volta, início" className="mb-8">
+          <Logo />
+        </Link>
+        <div className="w-full max-w-md rounded-2xl border border-border bg-surface p-6 shadow-xl shadow-black/20 sm:p-8">
+          <h1 className="text-3xl font-extrabold tracking-tight">{titulo}</h1>
+          {subtitulo && <p className="mt-1 text-muted">{subtitulo}</p>}
+          <div className="mt-6">{children}</div>
+        </div>
+        {abaixo && <div className="mt-6 text-center text-sm text-muted">{abaixo}</div>}
+      </main>
+      <footer className="pb-8">
+        <nav aria-label="Documentos" className="flex flex-wrap justify-center gap-x-5 gap-y-1 px-4 text-sm text-muted">
+          <Link to="/termos" className="hover:text-foreground hover:underline">Termos de uso</Link>
+          <Link to="/privacidade" className="hover:text-foreground hover:underline">Política de privacidade</Link>
+          <Link to="/acessibilidade" className="hover:text-foreground hover:underline">Acessibilidade</Link>
+          <a href={`mailto:${LEGAL.email}`} className="hover:text-foreground hover:underline">{LEGAL.email}</a>
+        </nav>
+      </footer>
+    </div>
+  )
+}

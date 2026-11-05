@@ -48,9 +48,11 @@ test('fluxo completo: cadastrar, gerar etiqueta, quem encontra avisa e o dono l√
 
   // Dono cria a conta
   await page.goto('/cadastro')
-  await page.getByLabel('Nome').fill('Dona Teste')
+  await page.getByLabel('Nome', { exact: true }).fill('Dona')
+  await page.getByLabel('Sobrenome').fill('Teste')
   await page.getByLabel('E-mail').fill(email)
-  await page.getByLabel('Senha').fill('senha-forte-123')
+  await page.getByLabel('Senha', { exact: true }).fill('senha-forte-123')
+  await page.getByLabel('Confirmar senha').fill('senha-forte-123')
   await page.getByLabel(/Tenho 18 anos/).check()
   await page.getByRole('button', { name: 'Criar conta' }).click()
   await expect(page.getByRole('heading', { name: 'Confirme seu e-mail' })).toBeVisible()
