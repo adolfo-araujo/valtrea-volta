@@ -1,7 +1,7 @@
 import { Link, Navigate } from 'react-router-dom'
 import { BellRing, EyeOff, QrCode, ShieldCheck } from 'lucide-react'
 import { useAuth } from '../lib/auth'
-import { Pagina, estilos } from '../components/ui'
+import { Pagina, estilos, ComoInstalarNoIphone } from '../components/ui'
 
 const PASSOS = [
   { icone: QrCode, titulo: 'Cadastre e cole a etiqueta', texto: 'Cada objeto ganha um QR Code próprio. Imprima e cole na mochila, na chave, na mala.' },
@@ -24,6 +24,7 @@ export function InicioPage() {
           <Link to="/cadastro" className={estilos.primario}>Criar conta grátis</Link>
           <Link to="/entrar" className={estilos.secundario}>Já tenho conta</Link>
         </div>
+        <ComoInstalarNoIphone />
       </section>
       <section aria-labelledby="como-funciona" className="border-t border-border py-10">
         <h2 id="como-funciona" className="text-2xl font-bold">Como funciona</h2>

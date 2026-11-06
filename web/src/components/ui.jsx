@@ -217,3 +217,18 @@ export function TelaAuth({ titulo, subtitulo, children, abaixo }) {
     </div>
   )
 }
+
+/** Dica de instalação no iPhone: o Safari não tem botão de instalar, então explicamos o caminho. */
+export function ComoInstalarNoIphone() {
+  const iphone = typeof navigator !== 'undefined' && /iPhone|iPad|iPod/.test(navigator.userAgent)
+  const instalado = typeof window !== 'undefined' &&
+    (window.matchMedia?.('(display-mode: standalone)').matches || window.navigator.standalone === true)
+  if (!iphone || instalado) return null
+  return (
+    <p className="mt-6 rounded-xl border border-border bg-surface p-4 text-sm leading-relaxed text-muted">
+      <strong className="text-foreground">Use como app no iPhone:</strong> no Safari, toque em{' '}
+      <strong className="text-foreground">Compartilhar</strong> e depois em{' '}
+      <strong className="text-foreground">Adicionar à Tela de Início</strong>.
+    </p>
+  )
+}
