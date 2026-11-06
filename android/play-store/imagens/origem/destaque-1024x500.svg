@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="500" viewBox="0 0 1024 500">
+  <defs>
+    <linearGradient id="fundo" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0D0F12"/>
+      <stop offset="1" stop-color="#0D3526"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="500" fill="url(#fundo)"/>
+  <g transform="translate(66 118)"><rect width="88" height="88" rx="22" fill="#0D3526"/><g transform="scale(2.75)"><path d="M7.5 9.5a2 2 0 0 1 2-2h6.3a2 2 0 0 1 1.4.6l7.7 7.7a2 2 0 0 1 0 2.8l-6.3 6.3a2 2 0 0 1-2.8 0L8.1 17.2a2 2 0 0 1-.6-1.4z" stroke="#55B02E" stroke-width="2.6" fill="none" stroke-linejoin="round"/><circle cx="12.3" cy="12.3" r="1.9" fill="#55B02E"/></g></g>
+  <text x="180" y="180" font-family="Inter, sans-serif" font-size="58" font-weight="700" fill="#FFFFFF">Valtrea <tspan fill="#55B02E">Volta</tspan></text>
+  <text x="66" y="280" font-family="Inter, sans-serif" font-size="38" font-weight="700" fill="#FFFFFF">Achou? Avise o dono.</text>
+  <text x="66" y="330" font-family="Inter, sans-serif" font-size="26" fill="#CBD5E1">Etiquetas com QR Code para seus objetos.</text>
+  <text x="66" y="366" font-family="Inter, sans-serif" font-size="26" fill="#CBD5E1">Quem encontra avisa, sem ver os seus dados.</text>
+  <g transform="translate(700 90) scale(10)" opacity="0.9"><path d="M7.5 9.5a2 2 0 0 1 2-2h6.3a2 2 0 0 1 1.4.6l7.7 7.7a2 2 0 0 1 0 2.8l-6.3 6.3a2 2 0 0 1-2.8 0L8.1 17.2a2 2 0 0 1-.6-1.4z" stroke="#55B02E" stroke-width="2.6" fill="none" stroke-linejoin="round"/><circle cx="12.3" cy="12.3" r="1.9" fill="#55B02E"/></g>
+</svg>
