@@ -1,0 +1,70 @@
+# Teste de carga do Valtrea Volta no seu computador (Docker Desktop). Use o rodar-teste-de-carga.bat.
+# Sobe banco, caixa de e-mails falsa e a API com o limite de CPU e memória do Render; nada vai para a internet.
+name: volta-carga
+services:
+  db:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_USER: valtrea
+      POSTGRES_PASSWORD: valtrea
+      POSTGRES_DB: valtrea_volta
+    command: ["-c", "max_connections=200"]
+    cpus: 1
+    mem_limit: 1g
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U valtrea -d valtrea_volta"]
+      interval: 2s
+      retries: 60
+
+  mail:
+    image: axllent/mailpit:v1.31.6
+
+  api:
+    build: ../api
+    depends_on:
+      db:
+        condition: service_healthy
+      mail:
+        condition: service_started
+    # 0.1 CPU e 512 MB = plano grátis do Render (o que está no ar hoje). Starter: 0.5 CPU.
+    cpus: ${CPUS:-0.1}
+    mem_limit: 512m
+    environment:
+      DATABASE_URL: jdbc:postgresql://db:5432/valtrea_volta
+      DATABASE_USER: valtrea
+      DATABASE_PASSWORD: valtrea
+      VALTREA_JWT_SECRET: segredo-do-teste-de-carga-com-32-caracteres
+      VALTREA_CHAVE_CIFRA: MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY=
+      MAIL_HOST: mail
+      MAIL_PORT: "1025"
+      SENTRY_DSN: ""
+
+  # Os passos abaixo só rodam quando chamados (docker compose run), um depois do outro.
+  preparo:
+    image: grafana/k6:0.54.0
+    profiles: ["passos"]
+    volumes: ["./:/scripts:ro"]
+    environment:
+      API_URL: http://api:8080
+      USERS: ${USUARIOS:-100}
+    command: ["run", "--quiet", "/scripts/seed.js"]
+
+  confirmar:
+    image: postgres:18-alpine
+    profiles: ["passos"]
+    environment:
+      PGPASSWORD: valtrea
+    command: ["psql", "-h", "db", "-U", "valtrea", "-d", "valtrea_volta", "-c",
+      "UPDATE usuarios SET email_confirmado_em = now() WHERE email LIKE 'carga-%@test.dev'"]
+
+  carga:
+    image: grafana/k6:0.54.0
+    profiles: ["passos"]
+    volumes: ["./:/scripts:ro", "./resultado:/resultado"]
+    environment:
+      API_URL: http://api:8080
+      USERS: ${USUARIOS:-100}
+      CPUS: ${CPUS:-0.1}
+      RAMP: ${RAMP:-1m}
+      HOLD: ${HOLD:-3m}
+    command: ["run", "--quiet", "/scripts/carga.js"]
