@@ -6,7 +6,7 @@ export const LEGAL = {
   controllerType: 'pessoa física',
   email: 'contato@valtrea.com.br',
   forum: 'Rio de Janeiro/RJ',
-  updatedAt: '4 de novembro de 2026',
+  updatedAt: '6 de novembro de 2026',
   // mantenha igual a Termos.VERSAO na API e Links.VERSAO_TERMOS no app Android
-  version: '2026-11-04',
+  version: '2026-11-06',
 }

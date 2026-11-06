@@ -101,8 +101,8 @@ export function CadastroPage() {
             <input id="aceite" type="checkbox" checked={aceite} onChange={(e) => setAceite(e.target.checked)} className="mt-1 h-4 w-4 accent-[#55B02E]"
               aria-describedby={erros.aceite ? 'aceite-erro' : undefined} />
             <label htmlFor="aceite" className="leading-relaxed text-muted">
-              Tenho 18 anos ou mais e li e aceito os{' '}
-              <Link to="/termos" target="_blank" className={estilos.link}>Termos de uso</Link> e a{' '}
+              Tenho 18 anos ou mais, li e aceito os{' '}
+              <Link to="/termos" target="_blank" className={estilos.link}>Termos de uso</Link> e estou ciente da{' '}
               <Link to="/privacidade" target="_blank" className={estilos.link}>Política de privacidade</Link>.
             </label>
           </div>

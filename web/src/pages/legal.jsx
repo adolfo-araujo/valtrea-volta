@@ -95,7 +95,16 @@ export function PrivacidadePage() {
         pode reclamar à Autoridade Nacional de Proteção de Dados (ANPD).
       </p>
 
-      <h2>6. Segurança</h2>
+      <h2>6. Cookies e armazenamento no navegador</h2>
+      <p>
+        Não usamos cookies de publicidade, de análise nem de terceiros. O site guarda no seu navegador (armazenamento
+        local) só o que é necessário para funcionar: as chaves da sua sessão, para manter você conectado.
+        Esses dados ficam só no seu aparelho e são apagados quando você sai da conta ou limpa os dados do navegador. Por
+        serem estritamente necessários ao serviço que você pediu, não dependem de consentimento. As fontes do site são
+        servidas pelo próprio site, sem pedidos a outras empresas.
+      </p>
+
+      <h2>7. Segurança</h2>
       <p>
         HTTPS sempre; senhas com bcrypt; QR Codes com código aleatório de 256 bits, guardado só como hash e cifrado com
         AES-256-GCM; códigos por e-mail com validade curta e poucas tentativas; bloqueio após senhas erradas; limites de
@@ -103,7 +112,7 @@ export function PrivacidadePage() {
         relevante, avisaremos você e a ANPD.
       </p>
 
-      <h2>7. Idade mínima e mudanças</h2>
+      <h2>8. Idade mínima e mudanças</h2>
       <p>
         O {LEGAL.appName} é destinado a maiores de 18 anos. Quando esta Política mudar, atualizaremos a data no topo e
         avisaremos no site, no app ou por e-mail se a mudança for importante.
@@ -170,7 +179,14 @@ export function TermosPage() {
         você tem como consumidor pela legislação brasileira.
       </p>
 
-      <h2>7. Encerramento, alterações e foro</h2>
+      <h2>7. Propriedade intelectual</h2>
+      <p>
+        A marca Valtrea, o nome {LEGAL.appName}, o visual e o código do serviço pertencem ao responsável e não podem ser
+        copiados nem usados sem autorização. O que você escreve (os recados e os nomes dos objetos) continua sendo seu: você só nos autoriza
+        a guardar e mostrar esse conteúdo no serviço enquanto ele estiver publicado, e declara que pode publicá-lo.
+      </p>
+
+      <h2>8. Encerramento, alterações e foro</h2>
       <p>
         Você pode excluir a conta a qualquer momento em <strong>Conta → Excluir conta</strong>. Se não concordar com uma
         nova versão destes Termos, pode excluir a conta sem custo. Estes Termos seguem as leis do Brasil; fica eleito o foro

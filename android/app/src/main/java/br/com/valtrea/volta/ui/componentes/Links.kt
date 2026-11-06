@@ -8,7 +8,7 @@ import br.com.valtrea.volta.BuildConfig
 /** Páginas públicas do site (exigidas pelo Google Play). */
 object Links {
     /** Versão vigente dos Termos e da Política. Igual a Termos.VERSAO na API. */
-    const val VERSAO_TERMOS = "2026-11-04"
+    const val VERSAO_TERMOS = "2026-11-06"
 
     val privacidade = BuildConfig.SITE_URL + "privacidade"
     val termos = BuildConfig.SITE_URL + "termos"

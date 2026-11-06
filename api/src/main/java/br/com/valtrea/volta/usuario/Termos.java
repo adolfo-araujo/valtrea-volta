@@ -4,7 +4,7 @@ package br.com.valtrea.volta.usuario;
 public final class Termos {
 
 	/** Ao publicar uma versão nova dos textos, troque aqui e em Links.VERSAO_TERMOS no app. */
-	public static final String VERSAO = "2026-11-04";
+	public static final String VERSAO = "2026-11-06";
 
 	private Termos() {
 	}
