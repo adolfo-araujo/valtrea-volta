@@ -98,7 +98,7 @@ export function CadastroPage() {
           onChange={muda('confirmacao')} erro={erros.confirmacao} />
         <div>
           <div className="flex items-start gap-2.5 text-sm">
-            <input id="aceite" type="checkbox" checked={aceite} onChange={(e) => setAceite(e.target.checked)} className="mt-1 h-4 w-4 accent-[#22C55E]"
+            <input id="aceite" type="checkbox" checked={aceite} onChange={(e) => setAceite(e.target.checked)} className="mt-1 h-4 w-4 accent-[#55B02E]"
               aria-describedby={erros.aceite ? 'aceite-erro' : undefined} />
             <label htmlFor="aceite" className="leading-relaxed text-muted">
               Tenho 18 anos ou mais e li e aceito os{' '}

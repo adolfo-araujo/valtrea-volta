@@ -20,8 +20,8 @@ export function Logo({ className = '' }) {
     <span className={`flex items-center gap-2.5 ${className}`}>
       <svg viewBox="0 0 32 32" className="h-8 w-8" aria-hidden="true">
         <rect width="32" height="32" rx="8" fill="#0F3D2E" />
-        <path d="M7.5 9.5a2 2 0 0 1 2-2h6.3a2 2 0 0 1 1.4.6l7.7 7.7a2 2 0 0 1 0 2.8l-6.3 6.3a2 2 0 0 1-2.8 0L8.1 17.2a2 2 0 0 1-.6-1.4z" stroke="#22C55E" strokeWidth="2.6" fill="none" strokeLinejoin="round" />
-        <circle cx="12.3" cy="12.3" r="1.9" fill="#22C55E" />
+        <path d="M7.5 9.5a2 2 0 0 1 2-2h6.3a2 2 0 0 1 1.4.6l7.7 7.7a2 2 0 0 1 0 2.8l-6.3 6.3a2 2 0 0 1-2.8 0L8.1 17.2a2 2 0 0 1-.6-1.4z" stroke="#55B02E" strokeWidth="2.6" fill="none" strokeLinejoin="round" />
+        <circle cx="12.3" cy="12.3" r="1.9" fill="#55B02E" />
       </svg>
       <span className="text-lg font-semibold tracking-tight">
         Valtrea <span className="text-primary">Volta</span>
