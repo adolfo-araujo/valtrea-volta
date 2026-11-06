@@ -26,7 +26,7 @@ export function InicioPage() {
         </div>
       </section>
       <section aria-labelledby="como-funciona" className="border-t border-border py-10">
-        <h2 id="como-funciona" className="text-2xl font-extrabold">Como funciona</h2>
+        <h2 id="como-funciona" className="text-2xl font-bold">Como funciona</h2>
         <ol className="mt-8 grid gap-6 sm:grid-cols-3">
           {PASSOS.map(({ icone: Icone, titulo, texto }) => (
             <li key={titulo} className={estilos.cartao}>

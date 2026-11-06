@@ -52,7 +52,7 @@ export function PublicoPage() {
             <AlertTriangle className="h-5 w-5" aria-hidden="true" /> O dono está procurando este objeto
           </p>
         )}
-        <h2 id="objeto-titulo" className="text-xl font-extrabold">{objeto.nome}</h2>
+        <h2 id="objeto-titulo" className="text-xl font-bold">{objeto.nome}</h2>
         <p className="text-sm text-muted">{CATEGORIAS[objeto.categoria]}</p>
         {objeto.mensagemPublica && (
           <blockquote className="mt-4 border-l-2 border-primary pl-3 text-foreground">
@@ -92,7 +92,7 @@ export function PublicoPage() {
             placeholder="E-mail ou telefone" dica="Só o dono vê, para combinar a devolução. Você pode deixar em branco." />
           <CampoRobo valor={website} aoMudar={setWebsite} />
           <div className="flex items-start gap-2.5 text-sm">
-            <input id="aceite-aviso" type="checkbox" checked={aceite} onChange={(e) => setAceite(e.target.checked)} className="mt-1 h-4 w-4 accent-[#55B02E]" />
+            <input id="aceite-aviso" type="checkbox" checked={aceite} onChange={(e) => setAceite(e.target.checked)} className="mt-1 h-4 w-4 accent-[#22C55E]" />
             <label htmlFor="aceite-aviso" className="leading-relaxed text-muted">
               Concordo em enviar esta mensagem (e o contato, se eu deixar) ao dono do objeto, conforme a{' '}
               <Link to="/privacidade" target="_blank" className={estilos.link}>Política de privacidade</Link>. Ela é apagada em 90 dias.
