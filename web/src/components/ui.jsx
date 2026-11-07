@@ -1,5 +1,5 @@
 import { useId, useState, useEffect } from 'react'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom'
 import { Bell, LogOut, Package, User } from 'lucide-react'
 import { useAuth } from '../lib/auth'
 import { LEGAL } from '../lib/legal'
@@ -107,6 +107,8 @@ function Rodape() {
       <div className="mx-auto flex max-w-5xl flex-col items-center gap-3 px-4 py-8 text-sm text-muted sm:flex-row sm:justify-between">
         <nav aria-label="Documentos" className="flex flex-wrap justify-center gap-x-5 gap-y-1">
           <Link to="/ajuda" className="hover:text-foreground hover:underline">Ajuda</Link>
+          <Link to="/novidades" className="hover:text-foreground hover:underline">Novidades</Link>
+          <LinkSugestao />
           <Link to="/termos" className="hover:text-foreground hover:underline">Termos de uso</Link>
           <Link to="/privacidade" className="hover:text-foreground hover:underline">Privacidade</Link>
           <Link to="/acessibilidade" className="hover:text-foreground hover:underline">Acessibilidade</Link>
@@ -210,6 +212,8 @@ export function TelaAuth({ titulo, subtitulo, children, abaixo }) {
       <footer className="pb-8">
         <nav aria-label="Documentos" className="flex flex-wrap justify-center gap-x-5 gap-y-1 px-4 text-sm text-muted">
           <Link to="/ajuda" className="hover:text-foreground hover:underline">Ajuda</Link>
+          <Link to="/novidades" className="hover:text-foreground hover:underline">Novidades</Link>
+          <LinkSugestao />
           <Link to="/termos" className="hover:text-foreground hover:underline">Termos de uso</Link>
           <Link to="/privacidade" className="hover:text-foreground hover:underline">Política de privacidade</Link>
           <Link to="/acessibilidade" className="hover:text-foreground hover:underline">Acessibilidade</Link>
@@ -255,5 +259,51 @@ export function AvisoServidorLento() {
         </p>
       )}
     </div>
+  )
+}
+
+/** "Enviar sugestão": abre o e-mail já com o produto e a página, para facilitar o relato. */
+export function LinkSugestao({ className = 'hover:text-foreground hover:underline' }) {
+  const { pathname } = useLocation()
+  const assunto = encodeURIComponent('[Valtrea Volta] Sugestão ou problema')
+  const corpo = encodeURIComponent(`Página: ${pathname}\n\nConte o que aconteceu ou o que você sugere:\n`)
+  return <a href={`mailto:${LEGAL.email}?subject=${assunto}&body=${corpo}`} className={className}>Enviar sugestão</a>
+}
+
+/**
+ * Primeiros passos: aparece enquanto falta algo do básico e some sozinho quando tudo estiver feito.
+ * O progresso vem dos dados da própria pessoa (nada é guardado no navegador).
+ * passos: [{ feito, titulo, texto, para?, rotulo? }]
+ */
+export function PrimeirosPassos({ passos }) {
+  const [oculto, setOculto] = useState(false)
+  const feitos = passos.filter((p) => p.feito).length
+  if (oculto || feitos === passos.length) return null
+  return (
+    <section aria-labelledby="primeiros-passos" className={`${estilos.cartao} mb-6`}>
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <h2 id="primeiros-passos" className="font-bold">Primeiros passos</h2>
+          <p className="text-sm text-muted">{feitos} de {passos.length} feitos</p>
+        </div>
+        <button type="button" onClick={() => setOculto(true)} className="rounded-md px-2 text-xl leading-none text-muted hover:text-foreground"
+          aria-label="Ocultar primeiros passos">×</button>
+      </div>
+      <ol className="mt-4 space-y-3">
+        {passos.map((p) => (
+          <li key={p.titulo} className="flex items-start gap-3">
+            <span aria-hidden="true" className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 text-xs font-bold ${
+              p.feito ? 'border-primary bg-primary text-background' : 'border-border'}`}>{p.feito ? '✓' : ''}</span>
+            <div className="flex-1">
+              <p className={p.feito ? 'font-semibold text-muted line-through' : 'font-semibold'}>
+                <span className="sr-only">{p.feito ? 'Feito: ' : 'A fazer: '}</span>{p.titulo}
+              </p>
+              {!p.feito && p.texto && <p className="text-sm text-muted">{p.texto}</p>}
+              {!p.feito && p.para && <Link to={p.para} className={`${estilos.link} mt-1 inline-block text-sm`}>{p.rotulo} →</Link>}
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
   )
 }

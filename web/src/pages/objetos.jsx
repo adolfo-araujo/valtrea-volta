@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import { AlertTriangle, ChevronRight, Download, Plus, Printer, QrCode as QrIcone, Trash2 } from 'lucide-react'
 import { CATEGORIAS, chamar } from '../lib/api'
 import { useAuth } from '../lib/auth'
-import { Campo, Mensagem, Pagina, estilos, useEnvio } from '../components/ui'
+import { Campo, Mensagem, Pagina, PrimeirosPassos, estilos, useEnvio } from '../components/ui'
 import { QrCode, useQrCode } from '../components/qr'
 
 const VAZIO = { nome: '', categoria: 'MOCHILA_BOLSA', descricao: '', mensagemPublica: '' }
@@ -61,6 +61,7 @@ function AvisoConfirmarEmail() {
 }
 
 export function ObjetosPage() {
+  const { perfil } = useAuth()
   const [objetos, setObjetos] = useState(null)
   const [criando, setCriando] = useState(false)
   const [erro, setErro] = useState('')
@@ -73,6 +74,13 @@ export function ObjetosPage() {
   return (
     <Pagina titulo="Meus objetos">
       <AvisoConfirmarEmail />
+      {objetos && (
+        <PrimeirosPassos passos={[
+          { feito: Boolean(perfil?.emailConfirmado), titulo: 'Confirme seu e-mail', texto: 'É por ele que avisamos quando alguém encontrar.', para: '/confirmar-email', rotulo: 'Confirmar agora' },
+          { feito: objetos.length > 0, titulo: 'Cadastre o objeto que você mais teme perder', texto: 'Mochila, chaves, carteira, mala, bicicleta.' },
+          { feito: objetos.some((o) => o.etiquetasAtivas > 0), titulo: 'Gere a etiqueta e cole no objeto', texto: 'Abra o objeto e toque em Gerar etiqueta. Depois, imprima e cole.' },
+        ]} />
+      )}
       <Mensagem tipo="erro">{erro}</Mensagem>
       {criando ? (
         <section aria-labelledby="novo-titulo" className={`${estilos.cartao} mb-6`}>

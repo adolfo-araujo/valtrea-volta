@@ -1,5 +1,11 @@
 User-agent: *
+Allow: /
 Disallow: /v/
+Disallow: /confirmar-email
+Disallow: /esqueci-senha
 Disallow: /objetos
 Disallow: /avisos
 Disallow: /conta
+Disallow: /etiquetas
+
+Sitemap: https://volta.valtrea.com.br/sitemap.xml
