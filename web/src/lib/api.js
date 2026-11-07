@@ -30,6 +30,18 @@ export const sessao = {
   },
 }
 
+// Pedidos que passaram de 4 s: mostram o aviso de "servidor acordando" (veja AvisoServidorLento).
+let lentos = 0
+const marcarLento = (delta) => {
+  lentos = Math.max(0, lentos + delta)
+  window.dispatchEvent(new CustomEvent('valtrea:lento', { detail: lentos }))
+}
+
+// Acorda a API (plano grátis do Render) assim que o site abre, enquanto a pessoa ainda lê ou digita.
+if (import.meta.env.PROD) {
+  fetch(`${BASE.replace(/\/api\/v1$/, '')}/actuator/health`, { mode: 'no-cors', cache: 'no-store' }).catch(() => {})
+}
+
 let memoria = sessao.ler()
 let renovando = null
 
@@ -69,10 +81,18 @@ export async function chamar(metodo, rota, corpo, { autenticar = true, tentativa
   const headers = { 'Content-Type': 'application/json' }
   if (autenticar && memoria?.accessToken) headers.Authorization = `Bearer ${memoria.accessToken}`
   let res
+  let avisou = false
+  const relogio = setTimeout(() => {
+    avisou = true
+    marcarLento(1)
+  }, 4000)
   try {
     res = await fetch(`${BASE}${rota}`, { method: metodo, headers, body: corpo ? JSON.stringify(corpo) : undefined })
   } catch {
     throw new ErroApi(0, 'Sem conexão com o servidor. Confira a internet e tente de novo. Na primeira vez do dia, ele pode levar até 1 minuto para acordar.')
+  } finally {
+    clearTimeout(relogio)
+    if (avisou) marcarLento(-1)
   }
   if (res.status === 401 && autenticar && tentativa === 0 && memoria?.refreshToken) {
     renovando ??= renovar().finally(() => (renovando = null))
