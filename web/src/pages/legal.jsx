@@ -99,7 +99,7 @@ export function PrivacidadePage() {
       <p>
         Não usamos cookies de publicidade, de análise nem de terceiros. O site guarda no seu navegador (armazenamento
         local) só o que é necessário para funcionar: as chaves da sua sessão, para manter você conectado.
-        Esses dados ficam só no seu aparelho e são apagados quando você sai da conta ou limpa os dados do navegador. Por
+        Se você escolher o tema claro no rodapé, guardamos também essa preferência. Esses dados ficam só no seu aparelho e são apagados quando você sai da conta (a sessão) ou limpa os dados do navegador. Por
         serem estritamente necessários ao serviço que você pediu, não dependem de consentimento. As fontes do site são
         servidas pelo próprio site, sem pedidos a outras empresas.
       </p>
