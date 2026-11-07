@@ -5,6 +5,7 @@ import { Pagina } from './components/ui'
 import { InicioPage } from './pages/inicio'
 import { CadastroPage, ConfirmarEmailPage, EntrarPage, EsqueciSenhaPage } from './pages/auth'
 import { ObjetoPage, ObjetosPage } from './pages/objetos'
+import { FolhaEtiquetasPage } from './pages/folha'
 import { AvisosPage } from './pages/avisos'
 import { ContaPage } from './pages/conta'
 import { PublicoPage } from './pages/publico'
@@ -29,6 +30,7 @@ export default function App() {
         <Route path="/confirmar-email" element={<ConfirmarEmailPage />} />
         <Route path="/v/:codigo" element={<PublicoPage />} />
         <Route path="/objetos" element={<Protegida><ObjetosPage /></Protegida>} />
+        <Route path="/etiquetas/imprimir" element={<Protegida><FolhaEtiquetasPage /></Protegida>} />
         <Route path="/objetos/:id" element={<Protegida><ObjetoPage /></Protegida>} />
         <Route path="/avisos" element={<Protegida><AvisosPage /></Protegida>} />
         <Route path="/conta" element={<Protegida><ContaPage /></Protegida>} />

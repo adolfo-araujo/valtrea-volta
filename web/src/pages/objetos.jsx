@@ -84,9 +84,16 @@ export function ObjetosPage() {
             }} />
         </section>
       ) : (
-        <button type="button" onClick={() => setCriando(true)} className={`${estilos.primario} mb-6`}>
-          <Plus className="h-4 w-4" aria-hidden="true" /> Cadastrar objeto
-        </button>
+        <div className="mb-6 flex flex-wrap gap-2">
+          <button type="button" onClick={() => setCriando(true)} className={estilos.primario}>
+            <Plus className="h-4 w-4" aria-hidden="true" /> Cadastrar objeto
+          </button>
+          {objetos?.some((o) => o.etiquetasAtivas > 0) && (
+            <Link to="/etiquetas/imprimir" className={estilos.secundario}>
+              <Printer className="h-4 w-4" aria-hidden="true" /> Imprimir todas as etiquetas
+            </Link>
+          )}
+        </div>
       )}
 
       {objetos === null && !erro && <p className="text-muted">Carregando…</p>}
