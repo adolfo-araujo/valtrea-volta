@@ -10,6 +10,7 @@ import { AvisosPage } from './pages/avisos'
 import { ContaPage } from './pages/conta'
 import { PublicoPage } from './pages/publico'
 import { AcessibilidadePage, ExcluirContaPage, PrivacidadePage, TermosPage } from './pages/legal'
+import { AjudaPage } from './pages/ajuda'
 
 function Protegida({ children }) {
   const { perfil, carregando } = useAuth()
@@ -34,6 +35,7 @@ export default function App() {
         <Route path="/objetos/:id" element={<Protegida><ObjetoPage /></Protegida>} />
         <Route path="/avisos" element={<Protegida><AvisosPage /></Protegida>} />
         <Route path="/conta" element={<Protegida><ContaPage /></Protegida>} />
+        <Route path="/ajuda" element={<AjudaPage />} />
         <Route path="/termos" element={<TermosPage />} />
         <Route path="/privacidade" element={<PrivacidadePage />} />
         <Route path="/acessibilidade" element={<AcessibilidadePage />} />
