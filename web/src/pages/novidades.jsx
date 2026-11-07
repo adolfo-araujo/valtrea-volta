@@ -3,6 +3,12 @@ import { Pagina } from '../components/ui'
 // O que mudou em cada versão. Acrescente no topo a cada novidade.
 const VERSOES = [
   [
+    "7 de novembro de 2026",
+    [
+      "Busca rápida: aperte Ctrl+K (ou / ) no computador para ir a qualquer tela."
+    ]
+  ],
+  [
     "6 de novembro de 2026",
     [
       "Imprimir todas as etiquetas numa folha A4, em três tamanhos e com cópias de cada.",

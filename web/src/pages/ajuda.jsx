@@ -55,6 +55,10 @@ const SECOES = [
     "Conta e dados",
     [
       [
+        "Tem atalho para ir mais rápido?",
+        "No computador, aperte Ctrl+K (ou Cmd+K no Mac) ou a tecla / em qualquer tela. Digite o que procura, como \"conta\" ou \"ajuda\", e aperte Enter."
+      ],
+      [
         "O site demorou para abrir. É normal?",
         "Quando o serviço fica um tempo sem uso, a primeira ação pode levar até 1 minuto, porque o servidor estava em repouso. Aparece o aviso \"Acordando o servidor\" e, depois disso, fica rápido."
       ],
