@@ -5,6 +5,8 @@ const VERSOES = [
   [
     "7 de novembro de 2026",
     [
+      "Plaquinha redonda de coleira para pet na folha de etiquetas.",
+      "Telas de carregamento, mensagens de erro mais claras e listas vazias com o próximo passo.",
       "Busca rápida: aperte Ctrl+K (ou / ) no computador para ir a qualquer tela."
     ]
   ],

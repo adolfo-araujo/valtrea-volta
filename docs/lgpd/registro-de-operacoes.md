@@ -4,7 +4,7 @@ Documento interno (LGPD art. 37), no formato simplificado para agente de tratame
 
 - **Controlador:** João Adolfo Martins Araújo (pessoa física), Rio de Janeiro/RJ
 - **Encarregado / canal:** sem encarregado indicado (dispensa de pequeno porte); canal: contato@valtrea.com.br
-- **Elaborado em:** 04/11/2026 · **Revisar:** a cada 12 meses ou a cada nova funcionalidade que trate dados
+- **Elaborado em:** 04/11/2026 · **Atualizado em:** 07/11/2026 · **Revisar:** a cada 12 meses ou a cada nova funcionalidade que trate dados
 - **Serviço:** Valtrea Volta (site volta.valtrea.com.br, app Android e API valtrea-volta-api.onrender.com), em testes
 
 ## Operações
@@ -46,3 +46,9 @@ Documento interno (LGPD art. 37), no formato simplificado para agente de tratame
 
 - Uso indevido: alguém pode colar uma etiqueta em objeto alheio para receber mensagens. Os Termos proíbem, e o dono não descobre nada sobre quem encontrou, a não ser o contato que a pessoa deixar.
 - O recado público é escrito pelo dono: o formulário avisa para não colocar telefone nem endereço.
+
+## Revisão de 07/11/2026
+
+- Plaquinha redonda de coleira na folha de etiquetas: usa o mesmo QR Code das etiquetas (operação já registrada). Nenhum dado novo.
+- Kit físico vendido pronto (docs/KIT-FISICO.md): quando existir, as etiquetas em branco precisarão de uma nova linha neste registro (vínculo do código à conta de quem comprou).
+- Busca rápida (Ctrl+K), telas de carregamento, de erro e de lista vazia: sem dados novos.

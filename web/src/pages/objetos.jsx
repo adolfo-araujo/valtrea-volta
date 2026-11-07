@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import { AlertTriangle, ChevronRight, Download, Plus, Printer, QrCode as QrIcone, Trash2 } from 'lucide-react'
 import { CATEGORIAS, chamar } from '../lib/api'
 import { useAuth } from '../lib/auth'
-import { Campo, Mensagem, Pagina, PrimeirosPassos, estilos, useEnvio } from '../components/ui'
+import { Campo, Carregando, Mensagem, Pagina, PrimeirosPassos, estilos, useEnvio } from '../components/ui'
 import { QrCode, useQrCode } from '../components/qr'
 
 const VAZIO = { nome: '', categoria: 'MOCHILA_BOLSA', descricao: '', mensagemPublica: '' }
@@ -104,7 +104,7 @@ export function ObjetosPage() {
         </div>
       )}
 
-      {objetos === null && !erro && <p className="text-muted">Carregando…</p>}
+      {objetos === null && !erro && <Carregando />}
       {objetos?.length === 0 && !criando && (
         <div className={estilos.cartao}>
           <h2 className="font-bold">Comece pelo objeto que você mais teme perder</h2>
@@ -207,7 +207,7 @@ export function ObjetoPage() {
   if (!objeto) {
     return (
       <Pagina titulo="Objeto">
-        {erro ? <Mensagem tipo="erro">{erro}</Mensagem> : <p className="text-muted">Carregando…</p>}
+        {erro ? <Mensagem tipo="erro">{erro}</Mensagem> : <Carregando />}
       </Pagina>
     )
   }

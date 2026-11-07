@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { useAuth } from './lib/auth'
 import { AvisoTermos } from './components/aviso-termos'
-import { Pagina } from './components/ui'
+import { Carregando, Pagina } from './components/ui'
 import { InicioPage } from './pages/inicio'
 import { CadastroPage, ConfirmarEmailPage, EntrarPage, EsqueciSenhaPage } from './pages/auth'
 import { ObjetoPage, ObjetosPage } from './pages/objetos'
@@ -33,7 +33,7 @@ const TELAS = [
 
 function Protegida({ children }) {
   const { perfil, carregando } = useAuth()
-  if (carregando) return <Pagina><p className="text-muted">Carregando…</p></Pagina>
+  if (carregando) return <Pagina><Carregando /></Pagina>
   if (!perfil) return <Navigate to="/entrar" replace />
   return children
 }

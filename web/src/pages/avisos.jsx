@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { CheckCircle2, ShieldCheck, Trash2 } from 'lucide-react'
 import { chamar } from '../lib/api'
-import { Mensagem, Pagina, estilos, useEnvio } from '../components/ui'
+import { Carregando, Mensagem, Pagina, Vazio, estilos, useEnvio } from '../components/ui'
 
 const STATUS = { NOVO: 'Novo', LIDO: 'Lido', RESOLVIDO: 'Resolvido' }
 
@@ -35,8 +35,10 @@ export function AvisosPage() {
         </p>
       </div>
       <Mensagem tipo="erro">{erro}</Mensagem>
-      {avisos === null && !erro && <p className="text-muted">Carregando…</p>}
-      {avisos?.length === 0 && <p className="text-muted">Nenhum aviso por enquanto.</p>}
+      {avisos === null && !erro && <Carregando />}
+      {avisos?.length === 0 && (
+        <Vazio titulo="Nenhum aviso por enquanto" texto="Quando alguém encontrar um objeto seu, ler a etiqueta e deixar um recado, ele aparece aqui." acao={['Ver meus objetos', '/objetos']} />
+      )}
       {avisos?.length > 0 && (
         <ul className="space-y-4">
           {avisos.map((a) => (

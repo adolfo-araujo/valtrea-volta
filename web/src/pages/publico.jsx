@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { AlertTriangle, CheckCircle2, ShieldCheck } from 'lucide-react'
 import { CATEGORIAS, chamar } from '../lib/api'
-import { Campo, CampoRobo, Mensagem, Pagina, estilos, useEnvio } from '../components/ui'
+import { Campo, CampoRobo, Carregando, Mensagem, Pagina, estilos, useEnvio } from '../components/ui'
 
 /**
  * Página aberta pelo QR Code. Quem encontrou não precisa de conta e não vê nada sobre o dono: só o nome do
@@ -42,7 +42,7 @@ export function PublicoPage() {
       </Pagina>
     )
   }
-  if (!objeto) return <Pagina largura="max-w-xl"><p className="text-muted">Carregando…</p></Pagina>
+  if (!objeto) return <Pagina largura="max-w-xl"><Carregando /></Pagina>
 
   return (
     <Pagina titulo="Você encontrou um objeto com dono" largura="max-w-xl">

@@ -310,3 +310,29 @@ export function PrimeirosPassos({ passos }) {
     </section>
   )
 }
+
+/** Enquanto os dados chegam: blocos no formato do conteúdo, em vez de uma tela vazia. */
+export function Carregando({ linhas = 3 }) {
+  return (
+    <div role="status" className="space-y-3">
+      <span className="sr-only">Carregando…</span>
+      {Array.from({ length: linhas }, (_, i) => (
+        <div key={i} aria-hidden="true" className="animate-pulse rounded-2xl border border-border bg-surface p-5">
+          <div className="h-4 w-1/3 rounded bg-surface-2" />
+          <div className="mt-3 h-3 w-2/3 rounded bg-surface-2" />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+/** Lista vazia: diz o que vai aparecer ali e qual é o próximo passo. */
+export function Vazio({ titulo, texto, acao }) {
+  return (
+    <div className="rounded-2xl border border-dashed border-border p-8 text-center">
+      <p className="font-bold">{titulo}</p>
+      {texto && <p className="mx-auto mt-1 max-w-md text-sm text-muted">{texto}</p>}
+      {acao && <Link to={acao[1]} className={`${estilos.primario} mt-4`}>{acao[0]}</Link>}
+    </div>
+  )
+}
