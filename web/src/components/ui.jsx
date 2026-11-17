@@ -336,3 +336,33 @@ export function Vazio({ titulo, texto, acao }) {
     </div>
   )
 }
+
+/** Abertura das páginas iniciais: selo, título grande com a segunda linha em verde e um cartão de vidro com o texto e os botões. */
+export function Abertura({ selo, titulo, destaque, texto, children }) {
+  return (
+    <section className="pb-10 pt-8 sm:pb-14 sm:pt-14">
+      <div className="text-center">
+        <p className="botao-vidro inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold text-muted sm:text-sm">
+          <span className="h-2 w-2 rounded-full bg-primary" aria-hidden="true" /> {selo}
+        </p>
+        <h1 className="mx-auto mt-6 max-w-3xl text-[2.5rem] font-extrabold leading-[1.03] sm:text-6xl">
+          {titulo}
+          <span className="block text-primary">{destaque}</span>
+        </h1>
+      </div>
+      <div className="vidro mx-auto mt-9 max-w-2xl rounded-3xl p-6 sm:p-8">
+        <p className="text-lg leading-relaxed text-muted">{texto}</p>
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row">{children}</div>
+      </div>
+    </section>
+  )
+}
+
+/** Ícone dentro de um quadradinho de vidro, para os cartões de "Como funciona". */
+export function IconeVidro({ icone: Icone }) {
+  return (
+    <span className="botao-vidro flex h-12 w-12 items-center justify-center rounded-2xl">
+      <Icone className="h-5 w-5 text-primary" aria-hidden="true" />
+    </span>
+  )
+}
