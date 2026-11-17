@@ -19,12 +19,12 @@ export const estilos = {
 export function Logo({ className = '' }) {
   return (
     <span className={`flex items-center gap-2.5 ${className}`}>
-      <svg viewBox="0 0 32 32" className="h-8 w-8" aria-hidden="true">
+      <svg viewBox="0 0 32 32" className="h-8 w-8 shrink-0" aria-hidden="true">
         <rect width="32" height="32" rx="8" fill="#0F3D2E" />
         <path d="M7.5 9.5a2 2 0 0 1 2-2h6.3a2 2 0 0 1 1.4.6l7.7 7.7a2 2 0 0 1 0 2.8l-6.3 6.3a2 2 0 0 1-2.8 0L8.1 17.2a2 2 0 0 1-.6-1.4z" stroke="#55B02E" strokeWidth="2.6" fill="none" strokeLinejoin="round" />
         <circle cx="12.3" cy="12.3" r="1.9" fill="#55B02E" />
       </svg>
-      <span className="text-lg font-semibold tracking-tight">
+      <span className="whitespace-nowrap text-base font-semibold tracking-tight sm:text-lg">
         Valtrea <span className="text-primary">Volta</span>
       </span>
     </span>
@@ -168,10 +168,10 @@ export function Pagina({ titulo, children, largura = 'max-w-5xl' }) {
             </nav>
           ) : (
             <nav aria-label="Principal" className="flex items-center gap-2 text-sm font-semibold">
-              <Link to="/entrar" className="rounded-lg px-3 py-2 text-muted hover:text-foreground">
+              <Link to="/entrar" className="botao-vidro inline-flex h-9 items-center whitespace-nowrap rounded-full px-4 text-foreground">
                 Entrar
               </Link>
-              <Link to="/cadastro" className="botao-verde inline-flex h-9 items-center rounded-full bg-primary px-4 text-background hover:bg-primary-hover">
+              <Link to="/cadastro" className="botao-verde hidden h-9 items-center whitespace-nowrap rounded-full bg-primary px-4 text-background hover:bg-primary-hover min-[420px]:inline-flex">
                 Criar conta
               </Link>
             </nav>
@@ -179,7 +179,7 @@ export function Pagina({ titulo, children, largura = 'max-w-5xl' }) {
         </div>
       </header>
       <main id="conteudo" tabIndex={-1} className={`mx-auto w-full flex-1 px-4 py-8 ${largura}`}>
-        {titulo && <h1 className="no-print mb-6 text-2xl font-bold tracking-tight sm:text-3xl">{titulo}</h1>}
+        {titulo && <h1 className="no-print mb-6 text-3xl font-extrabold sm:text-4xl">{titulo}</h1>}
         {children}
       </main>
       <Rodape />
