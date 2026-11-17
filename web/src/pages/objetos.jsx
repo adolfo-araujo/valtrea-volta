@@ -115,7 +115,7 @@ export function ObjetosPage() {
         </div>
       )}
       {objetos?.length > 0 && (
-        <ul className="divide-y divide-border overflow-hidden rounded-2xl border border-border bg-surface">
+        <ul className="divide-y divide-border overflow-hidden vidro rounded-2xl">
           {objetos.map((o) => (
             <li key={o.id}>
               <Link to={`/objetos/${o.id}`} className="flex items-center gap-4 px-5 py-4 hover:bg-surface-2">

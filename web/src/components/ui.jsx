@@ -7,13 +7,13 @@ import { BotaoTema } from './tema'
 
 export const estilos = {
   primario:
-    'inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-primary px-5 font-semibold text-background transition-colors hover:bg-primary-hover disabled:opacity-60',
+    'botao-verde inline-flex h-11 items-center justify-center gap-2 rounded-full bg-primary px-6 font-semibold text-background hover:bg-primary-hover disabled:opacity-60',
   secundario:
-    'inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-border bg-surface-2 px-5 font-semibold transition-colors hover:bg-border disabled:opacity-60',
+    'botao-vidro inline-flex h-11 items-center justify-center gap-2 rounded-full px-6 font-semibold text-foreground disabled:opacity-60',
   perigo:
-    'inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-danger/60 px-5 font-semibold text-danger transition-colors hover:bg-danger/10 disabled:opacity-60',
+    'inline-flex h-11 items-center justify-center gap-2 rounded-full border border-danger/50 px-6 font-semibold text-danger transition-colors hover:bg-danger/10 disabled:opacity-60',
   link: 'font-semibold text-primary underline-offset-2 hover:underline',
-  cartao: 'rounded-2xl border border-border bg-surface p-5 sm:p-6',
+  cartao: 'vidro rounded-2xl p-5 sm:p-6',
 }
 
 export function Logo({ className = '' }) {
@@ -45,7 +45,7 @@ export function Campo({ rotulo, erro, dica, as = 'input', className = '', ...pro
         id={id}
         aria-invalid={erro ? true : undefined}
         aria-describedby={descricao}
-        className={`mt-1 w-full rounded-lg border bg-background px-3 text-foreground placeholder:text-muted ${
+        className={`mt-1 w-full rounded-xl border bg-surface px-3.5 text-foreground placeholder:text-muted ${
           as === 'textarea' ? 'min-h-28 py-2' : 'h-11'
         } ${erro ? 'border-danger' : 'border-border'}`}
         {...props}
@@ -135,7 +135,7 @@ export function Pagina({ titulo, children, largura = 'max-w-5xl' }) {
       >
         Pular para o conteúdo
       </a>
-      <header className="no-print border-b border-border/60">
+      <header className="no-print sticky top-0 z-30 border-b border-border/50 bg-background/70 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-5xl items-center justify-between gap-2 px-4">
           <Link to={perfil ? '/objetos' : '/'} aria-label="Valtrea Volta, início">
             <Logo />
@@ -171,7 +171,7 @@ export function Pagina({ titulo, children, largura = 'max-w-5xl' }) {
               <Link to="/entrar" className="rounded-lg px-3 py-2 text-muted hover:text-foreground">
                 Entrar
               </Link>
-              <Link to="/cadastro" className="inline-flex h-9 items-center rounded-lg bg-primary px-4 text-background hover:bg-primary-hover">
+              <Link to="/cadastro" className="botao-verde inline-flex h-9 items-center rounded-full bg-primary px-4 text-background hover:bg-primary-hover">
                 Criar conta
               </Link>
             </nav>
@@ -204,7 +204,7 @@ export function TelaAuth({ titulo, subtitulo, children, abaixo }) {
         <Link to="/" aria-label="Valtrea Volta, início" className="mb-8">
           <Logo />
         </Link>
-        <div className="w-full max-w-md rounded-2xl border border-border bg-surface p-6 shadow-xl shadow-black/20 sm:p-8">
+        <div className="w-full max-w-md vidro rounded-2xl p-6 shadow-xl shadow-black/20 sm:p-8">
           <h1 className="text-3xl font-bold tracking-tight">{titulo}</h1>
           {subtitulo && <p className="mt-1 text-muted">{subtitulo}</p>}
           <div className="mt-6">{children}</div>
@@ -234,7 +234,7 @@ export function ComoInstalarNoIphone() {
     (window.matchMedia?.('(display-mode: standalone)').matches || window.navigator.standalone === true)
   if (!iphone || instalado) return null
   return (
-    <p className="mt-6 rounded-xl border border-border bg-surface p-4 text-sm leading-relaxed text-muted">
+    <p className="mt-6 vidro rounded-xl p-4 text-sm leading-relaxed text-muted">
       <strong className="text-foreground">Use como app no iPhone:</strong> no Safari, toque em{' '}
       <strong className="text-foreground">Compartilhar</strong> e depois em{' '}
       <strong className="text-foreground">Adicionar à Tela de Início</strong>.
@@ -256,7 +256,7 @@ export function AvisoServidorLento() {
   return (
     <div role="status" aria-live="polite" className="pointer-events-none fixed inset-x-0 bottom-4 z-50 flex justify-center px-4">
       {lento && (
-        <p className="max-w-md rounded-xl border border-border bg-surface px-4 py-3 text-sm leading-relaxed text-foreground shadow-xl">
+        <p className="max-w-md vidro rounded-xl px-4 py-3 text-sm leading-relaxed text-foreground shadow-xl">
           <strong>Acordando o servidor…</strong> Quando o site fica um tempo sem uso, a primeira ação pode levar até
           1 minuto. Depois fica rápido.
         </p>
@@ -317,7 +317,7 @@ export function Carregando({ linhas = 3 }) {
     <div role="status" className="space-y-3">
       <span className="sr-only">Carregando…</span>
       {Array.from({ length: linhas }, (_, i) => (
-        <div key={i} aria-hidden="true" className="animate-pulse rounded-2xl border border-border bg-surface p-5">
+        <div key={i} aria-hidden="true" className="animate-pulse vidro rounded-2xl p-5">
           <div className="h-4 w-1/3 rounded bg-surface-2" />
           <div className="mt-3 h-3 w-2/3 rounded bg-surface-2" />
         </div>
