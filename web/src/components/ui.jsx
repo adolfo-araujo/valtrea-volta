@@ -4,6 +4,7 @@ import { Bell, LogOut, Package, User } from 'lucide-react'
 import { useAuth } from '../lib/auth'
 import { LEGAL } from '../lib/legal'
 import { BotaoTema } from './tema'
+import { OlhoAberto, OlhoFechado } from './olho'
 
 export const estilos = {
   primario:
@@ -31,28 +32,19 @@ export function Logo({ className = '' }) {
   )
 }
 
-/** Campo com rótulo sempre visível e mensagem de erro ligada a ele (WCAG 1.3.1 e 3.3.1). */
-export function Campo({ rotulo, erro, dica, as = 'input', className = '', ...props }) {
+/** Campo com rótulo ligado a ele e mensagem de erro (WCAG 1.3.1 e 3.3.1). Em senha, o rótulo sobe para a borda e o olho mostra o que foi digitado. */
+export function Campo({ rotulo, erro, dica, as = 'input', className = '', type, placeholder, ...props }) {
   const id = useId()
+  const [visivel, setVisivel] = useState(false)
   const Elemento = as
-  const descricao = [dica && `${id}-dica`, erro && `${id}-erro`].filter(Boolean).join(' ') || undefined
-  return (
-    <div className={className}>
-      <label htmlFor={id} className="text-sm font-semibold">
-        {rotulo}
-      </label>
-      <Elemento
-        id={id}
-        aria-invalid={erro ? true : undefined}
-        aria-describedby={descricao}
-        className={`mt-1 w-full rounded-xl border bg-surface px-3.5 text-foreground placeholder:text-muted ${
-          as === 'textarea' ? 'min-h-28 py-2' : 'h-11'
-        } ${erro ? 'border-danger' : 'border-border'}`}
-        {...props}
-      />
-      {dica && (
+  const senha = as === 'input' && type === 'password'
+  const textoDica = dica || (senha ? placeholder : undefined)
+  const descricao = [textoDica && `${id}-dica`, erro && `${id}-erro`].filter(Boolean).join(' ') || undefined
+  const rodape = (
+    <>
+      {textoDica && (
         <p id={`${id}-dica`} className="mt-1 text-xs text-muted">
-          {dica}
+          {textoDica}
         </p>
       )}
       {erro && (
@@ -60,6 +52,67 @@ export function Campo({ rotulo, erro, dica, as = 'input', className = '', ...pro
           {erro}
         </p>
       )}
+    </>
+  )
+
+  if (senha) {
+    const borda = erro ? 'border-danger' : 'border-border focus:border-primary [&:not(:placeholder-shown)]:border-primary'
+    const sobe =
+      'peer-focus:top-0 peer-focus:text-xs peer-focus:font-semibold peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:font-semibold'
+    const corRotulo = erro ? 'text-danger' : 'text-muted peer-focus:text-primary peer-[:not(:placeholder-shown)]:text-primary'
+    return (
+      <div className={className}>
+        <div className="relative mt-2">
+          <input
+            id={id}
+            type={visivel ? 'text' : 'password'}
+            placeholder=" "
+            aria-invalid={erro ? true : undefined}
+            aria-describedby={descricao}
+            className={`peer h-12 w-full rounded-xl border-2 bg-surface pl-3.5 pr-12 text-foreground outline-none transition-colors duration-200 ${borda}`}
+            {...props}
+          />
+          <label
+            htmlFor={id}
+            className={`pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 bg-surface px-1 text-base transition-all duration-200 ${sobe} ${corRotulo}`}
+          >
+            {rotulo}
+          </label>
+          <button
+            type="button"
+            onClick={() => setVisivel((atual) => !atual)}
+            aria-label={visivel ? 'Ocultar senha' : 'Mostrar senha'}
+            aria-pressed={visivel}
+            aria-controls={id}
+            className={`absolute right-2 top-1/2 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-lg transition-colors ${
+              visivel ? 'text-primary' : 'text-muted hover:text-foreground'
+            }`}
+          >
+            {visivel ? <OlhoAberto /> : <OlhoFechado />}
+          </button>
+        </div>
+        {rodape}
+      </div>
+    )
+  }
+
+  return (
+    <div className={className}>
+      <label htmlFor={id} className="text-sm font-semibold">
+        {rotulo}
+      </label>
+      <Elemento
+        id={id}
+        type={type}
+        placeholder={placeholder}
+        aria-invalid={erro ? true : undefined}
+        aria-describedby={descricao}
+        className={`mt-1 w-full rounded-xl border bg-surface px-3.5 text-foreground placeholder:text-muted ${
+          as === 'textarea' ? 'min-h-28 py-2' : 'h-11'
+        } ${erro ? 'border-danger' : 'border-border'}`}
+        {...props}
+      />
+      {rodape}
     </div>
   )
 }
