@@ -6,12 +6,14 @@ import { AuthProvider } from './lib/auth'
 import { AvisoServidorLento } from './components/ui'
 import './fonts.css'
 import './index.css'
+import { TemaNoCanto } from './components/tema'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
         <App />
+        <TemaNoCanto />
         <AvisoServidorLento />
       </AuthProvider>
     </BrowserRouter>
